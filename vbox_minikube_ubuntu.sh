@@ -18,7 +18,7 @@ read
 echo "Installing VirtualBox 6.1"
 
 DIST=$(lsb_release -c)
-echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $DIST contrib"  >> /etc/apt/sources.list
+sudo echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $DIST contrib"  >> /etc/apt/sources.list
 
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
@@ -37,17 +37,18 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 
 echo Confguring minikube
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
-
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
 sudo install minikube /usr/local/bin/
 
-### automatically rebooting to complete procedure
+
 
 echo Installation Completed Successfully
-echo 'Once rebooted you can run minikube with command "minikube start --driver=virtualbox"'
+echo 'you can now run minikube with command "minikube start --driver=virtualbox"'
 echo 'Wait for the command to finish configuring minukube cluster in a single VM'
 echo 'Make sure you have a GOOD internet connection as it downloads more than 500MB of data before fully configured'
 echo Good Luck and Have Fun!
+### automatically rebooting to complete procedure
 ## echo Press Ctrl-C now to stop this script in case you don\'t want to reboot
 ## sleep 5
 ## cat << REBOOT >> /root/completeme.sh
