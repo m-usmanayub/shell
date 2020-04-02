@@ -48,15 +48,15 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/miniku
 chmod +x minikube
 sudo install minikube /usr/local/bin/
 rm ./minikube
-echo ################################################################
+echo "#############################################################################################################"
 echo Installation Completed Successfully!
 echo 
 echo 'To Check the version of kubectl run: "kubectl version --client"'
 echo
 echo 'To check the version of minikube run: "minikube version"'
-echo ################################################################
+echo "#############################################################################################################"
 echo 'You can now run minikube with command "minikube start --driver=virtualbox"'
 echo 'Wait for the command to finish configuring minukube cluster in a single VM'
 echo 'Make sure you have a Good internet connection as it downloads more than 500MB of data before fully configured'
-echo
 echo Good Luck and Have Fun!
+echo "#############################################################################################################"
