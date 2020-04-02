@@ -4,7 +4,7 @@
 ######################################################################
 
 echo "This script installs VirtualBox and minikube along with kubectl"
-if [ $(uname -m) == "x86_x64" ];
+if [ $(uname -m) == "x86_64" ];
 then
 	echo You\'re running a comptatible OS, good, lets continue
 else
@@ -13,18 +13,18 @@ else
 	exit 66
 fi
 
-echo press enter to continue
+echo Press enter to continue
 read
 echo "Installing VirtualBox 6.1"
 
-DIST=$(lsb_release -c)
-sudo echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $DIST contrib"  >> /etc/apt/sources.list
+DIST=$(lsb_release -c | awk ' { print $2 } ')
+echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $DIST contrib" | sudo tee -a /etc/apt/sources.list
 
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 
 sudo apt update
-sudo apt install virtualbox-6.1
+sudo apt install  -y virtualbox-6.1
 
 # configure K8s
 if [ ! -d /usr/local/bin ]; then
@@ -40,26 +40,16 @@ echo Confguring minikube
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube
 sudo install minikube /usr/local/bin/
+rm ./minikube
 
-
-
-echo Installation Completed Successfully
-echo 'you can now run minikube with command "minikube start --driver=virtualbox"'
+echo Installation Completed Successfully!
+echo 
+echo 'To Check the version of kubectl run: "kubectl version --client"
+echo
+echo 'To check the version of minikube run: "minikube version"'
+echo
+echo 'You can now run minikube with command "minikube start --driver=virtualbox"'
 echo 'Wait for the command to finish configuring minukube cluster in a single VM'
-echo 'Make sure you have a GOOD internet connection as it downloads more than 500MB of data before fully configured'
+echo 'Make sure you have a Good internet connection as it downloads more than 500MB of data before fully configured'
+echo
 echo Good Luck and Have Fun!
-### automatically rebooting to complete procedure
-## echo Press Ctrl-C now to stop this script in case you don\'t want to reboot
-## sleep 5
-## cat << REBOOT >> /root/completeme.sh
-## vboxconfig
-## rm -f /etc/profile
-## mv /etc/profile.bak /etc/profile
-## echo DONE
-## REBOOT
-## 
-## chmod +x /root/completeme.sh
-## cp /etc/profile /etc/profile.bak
-## echo /root/completeme.sh >> /etc/profile
-## 
-## reboot
